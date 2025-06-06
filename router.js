@@ -56,4 +56,4 @@ function postKegiatan(req,res){
 function homePage(req,res){
 	res.send("Hello World!")
 }
-export { getAllDatas, postData, getKegiatan, getAllKegiatan, postKegiatan }
+export { getAllDatas, postData, getKegiatan, getAllKegiatan, postKegiatan, homePage }
