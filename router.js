@@ -20,7 +20,8 @@ function postData(req,res){
         }
         await db.collection(config.collection.presensi).insertOne(obj)
         res.send({
-            "message" : "Berhasil"
+            "message" : "Anda berhasil melaksanakan presensi",
+		"response_code":200
         })
     })
 }
@@ -30,6 +31,12 @@ function getKegiatan(req,res){
         let datas = await db.collection(config.collection.acara).findOne({id_kegiatan:req.params['idKegiatan']})
         res.send(datas)
     })
+}
+function getDatas(req,res){
+  connectDB(config.users[0].user, config.users[0].pass, async (db)=>{
+    let datas = await db.collection(config.collection.presensi).find({id_acara:req.params['idKegiatan']}).toArray()
+    res.send(datas)
+  })
 }
 function getAllKegiatan(req,res){
     connectDB(config.users[0].user, config.users[0].pass, async (db)=>{
@@ -47,13 +54,20 @@ function postKegiatan(req,res){
             tanggal_kegiatan : req.body.tanggal_kegiatan
 
         }
+	try{
         await db.collection(config.collection.acara).insertOne(obj)
         res.send({
-            "message" : "Berhasil"
-        })
+            "message" : "Anda berhasil membuat kegiatan baru",
+		"err_message" :""
+        })} catch(err){
+		res.send({
+			"message" : "Anda gagal membuat kegiatan baru",
+			"err_message":err.message
+		})
+	}
     })
 }
 function homePage(req,res){
 	res.send("Hello World!")
 }
-export { getAllDatas, postData, getKegiatan, getAllKegiatan, postKegiatan, homePage }
+export { getAllDatas, postData, getKegiatan, getAllKegiatan, postKegiatan, homePage, getDatas }

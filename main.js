@@ -1,6 +1,14 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-import { getAllDatas, postData, getKegiatan, getAllKegiatan, postKegiatan, homePage } from './router.js'
+import { 
+  getAllDatas, 
+  postData, 
+  getKegiatan, 
+  getAllKegiatan, 
+  postKegiatan, 
+  homePage,
+  getDatas
+} from './router.js'
 import config from './config.js'
 import cors from 'cors'
 
@@ -14,6 +22,7 @@ app.post('/api/postData',postData)
 app.get('/api/getKegiatan/:idKegiatan',getKegiatan)
 app.get('/api/getAllKegiatan',getAllKegiatan)
 app.post('/api/postKegiatan',postKegiatan)
+app.get('/api/getDatas/:idKegiatan',getDatas)
 
 app.listen(process.env.PORT || 7000,()=>{
     console.log(`Listening to Port ${config.port}`)
