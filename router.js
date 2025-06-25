@@ -15,6 +15,7 @@ function postData(req,res){
             unit_kerja:req.body.unit_kerja,
             signature:req.body.signature,
             upload_time:req.body.upload_time,
+	    no_hp : req.body.no_hp,	
             id_acara : req.body.id_acara
 
         }
