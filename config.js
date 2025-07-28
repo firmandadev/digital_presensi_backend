@@ -7,7 +7,9 @@ export default
     ],
     "collection" : {
         "presensi":"presensi",
-        "acara" : "acara"
+        "acara" : "acara",
+        "contents" : "contents",
+        "upts" : "upts"
     },
     "port" : 7000
 }

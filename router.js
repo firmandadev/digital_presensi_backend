@@ -1,4 +1,4 @@
-import { connectDB } from './dbhandler.js'
+import { connectDB, connectDBKKP } from './dbhandler.js'
 import config from './config.js'
 
 function getAllDatas(req,res){
@@ -68,7 +68,84 @@ function postKegiatan(req,res){
 	}
     })
 }
+function getKKP(req,res){
+    connectDBKKP(config.users[0].user, config.users[0].pass, async (db)=>{
+        let datas = await db.collection(config.collection.upts).find().toArray()
+        res.send(datas)
+    })
+}
 function homePage(req,res){
 	res.send("Hello World!")
 }
-export { getAllDatas, postData, getKegiatan, getAllKegiatan, postKegiatan, homePage, getDatas }
+function postKKP(req,res){
+    connectDBKKP(config.users[0].user,config.users[0].pass,async (db)=>{
+        let obj={
+            id_kegiatan : req.body.id_kegiatan,
+            nama_upt : req.body.nama_upt,
+            tanggala : req.body.tanggala,
+            tanggalb : req.body.tanggalb,
+            periodea : req.body.periodea,
+            periodeb : req.body.periodeb,
+        }
+	try{
+        await db.collection(config.collection.upts).insertOne(obj)
+        res.send({
+            "message" : "Anda berhasil membuat kegiatan baru",
+		"err_message" :""
+        })} catch(err){
+		res.send({
+			"message" : "Anda gagal membuat kegiatan baru",
+			"err_message":err.message
+		})
+	}
+    })
+}
+function getKKPContents(req,res){
+    connectDBKKP(config.users[0].user, config.users[0].pass, async (db)=>{
+         let datas = await db.collection(config.collection.upts).findOne({id_kegiatan:req.params['idKKP']})
+         let contents = await db.collection(config.collection.contents).find({id_kegiatan:req.params['idKKP']}).toArray()
+        res.send({
+            upt: datas,
+            contents : contents
+        })
+    })
+}
+function postKKPContents(req,res){
+    connectDBKKP(config.users[0].user,config.users[0].pass,async (db)=>{
+        let obj={
+            id_kegiatan : req.body.id_kegiatan,
+            catatan : req.body.catatan,
+            bidang : req.body.bidang,
+            keterangan : req.body.keterangan,
+            noberkas : req.body.noberkas,
+            saran : req.body.saran,
+        }
+	try{
+        await db.collection(config.collection.contents).insertOne(obj)
+        res.send({
+            "message" : "Anda berhasil membuat kegiatan baru",
+		"err_message" :""
+        })} catch(err){
+		res.send({
+			"message" : "Anda gagal membuat kegiatan baru",
+			"err_message":err.message
+		})
+	}
+    })
+}
+function deleteKKPContents(req,res){
+    connectDBKKP(config.users[0].user, config.users[0].pass, async (db)=>{
+        try{
+            let datas = await db.collection(config.collection.contents).deleteOne({id_kegiatan:req.params['idKKP']})
+            res.send({
+                message : "Berhasil Menghapus Data"
+            })
+        }catch(err){
+            res.send({
+                message : "Gagal Menghapus Data"
+            })
+        }
+         
+    })
+}
+export { getAllDatas, postData, getKegiatan, getAllKegiatan, postKegiatan, homePage, getDatas, postKKP, getKKP, getKKPContents, postKKPContents, deleteKKPContents }
