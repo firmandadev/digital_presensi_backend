@@ -15,7 +15,7 @@ function postData(req,res){
             unit_kerja:req.body.unit_kerja,
             signature:req.body.signature,
             upload_time:req.body.upload_time,
-	    no_hp : req.body.no_hp,	
+	        no_hp : req.body.no_hp,	
             id_acara : req.body.id_acara
 
         }
@@ -86,6 +86,10 @@ function postKKP(req,res){
             tanggalb : req.body.tanggalb,
             periodea : req.body.periodea,
             periodeb : req.body.periodeb,
+            linknhp : req.body.linknhp,
+            linklhp : req.body.linklhp,
+            linksurat : req.body.linksurat,
+            linkblangko : req.body.linkblangko,
         }
 	try{
         await db.collection(config.collection.upts).insertOne(obj)
@@ -117,6 +121,7 @@ function postKKPContents(req,res){
             catatan : req.body.catatan,
             bidang : req.body.bidang,
             keterangan : req.body.keterangan,
+            bulan : req.body.bulan,
             noberkas : req.body.noberkas,
             saran : req.body.saran,
         }
@@ -148,4 +153,34 @@ function deleteKKPContents(req,res){
          
     })
 }
-export { getAllDatas, postData, getKegiatan, getAllKegiatan, postKegiatan, homePage, getDatas, postKKP, getKKP, getKKPContents, postKKPContents, deleteKKPContents }
+function updateKKP(req,res){
+    connectDBKKP(config.users[0].user, config.users[0].pass, async (db)=>{
+        try{
+            let datas = await db.collection(config.collection.upts).updateOne(
+                {
+                    id_kegiatan:req.params['idKKP']
+                },{$set:{
+                    id_kegiatan : req.body.id_kegiatan,
+                    nama_upt : req.body.nama_upt,
+                    tanggala : req.body.tanggala,
+                    tanggalb : req.body.tanggalb,
+                    periodea : req.body.periodea,
+                    periodeb : req.body.periodeb,
+                    linknhp : req.body.linknhp,
+                    linklhp : req.body.linklhp,
+                    linksurat : req.body.linksurat,
+                    linkblangko : req.body.linkblangko,
+                }})
+            res.send({
+                message : "Berhasil Update Data"
+            })
+        }catch(err){
+            res.send({
+                message : "Gagal Update Data",
+                err : err.message
+            })
+        }
+         
+    })
+}
+export { getAllDatas, postData, getKegiatan, getAllKegiatan, postKegiatan, homePage, getDatas, postKKP, getKKP, getKKPContents, postKKPContents, deleteKKPContents, updateKKP }

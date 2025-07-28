@@ -12,7 +12,8 @@ import {
   getKKP,
   getKKPContents,
   postKKPContents,
-  deleteKKPContents
+  deleteKKPContents,
+  updateKKP
 } from './router.js'
 import config from './config.js'
 import cors from 'cors'
@@ -30,9 +31,11 @@ app.post('/api/postKegiatan',postKegiatan)
 app.get('/api/getDatas/:idKegiatan',getDatas)
 app.post('/api/pengendalian/kkp/uploadKKP',postKKP)
 app.get('/api/pengendalian/kkp/getKKP',getKKP)
+app.put('/api/pengendalian/kkp/updateKKP/:idKKP',updateKKP)
 app.get('/api/pengendalian/kkp/getKKP/:idKKP',getKKPContents)
 app.post('/api/pengendalian/kkp/uploadKKP/:idKKP',postKKPContents)
 app.delete('/api/pengendalian/kkp/deleteKKP/:idKKP',deleteKKPContents)
+
 
 
 app.listen(process.env.PORT || 7000,()=>{
