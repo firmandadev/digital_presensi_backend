@@ -34,7 +34,7 @@ app.get('/api/pengendalian/kkp/getKKP',getKKP)
 app.put('/api/pengendalian/kkp/updateKKP/:idKKP',updateKKP)
 app.get('/api/pengendalian/kkp/getKKP/:idKKP',getKKPContents)
 app.post('/api/pengendalian/kkp/uploadKKP/:idKKP',postKKPContents)
-app.delete('/api/pengendalian/kkp/deleteKKP/:idKKP',deleteKKPContents)
+app.delete('/api/pengendalian/kkp/deleteKKP/:idContent',deleteKKPContents)
 
 
 

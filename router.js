@@ -117,6 +117,7 @@ function getKKPContents(req,res){
 function postKKPContents(req,res){
     connectDBKKP(config.users[0].user,config.users[0].pass,async (db)=>{
         let obj={
+            id_content : req.body.id_content,
             id_kegiatan : req.body.id_kegiatan,
             catatan : req.body.catatan,
             bidang : req.body.bidang,
@@ -141,7 +142,7 @@ function postKKPContents(req,res){
 function deleteKKPContents(req,res){
     connectDBKKP(config.users[0].user, config.users[0].pass, async (db)=>{
         try{
-            let datas = await db.collection(config.collection.contents).deleteOne({id_kegiatan:req.params['idKKP']})
+            let datas = await db.collection(config.collection.contents).deleteOne({id_content:req.params['idContent']})
             res.send({
                 message : "Berhasil Menghapus Data"
             })
