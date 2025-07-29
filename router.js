@@ -117,6 +117,7 @@ function getKKPContents(req,res){
 function postKKPContents(req,res){
     connectDBKKP(config.users[0].user,config.users[0].pass,async (db)=>{
         let obj={
+            user : req.body.user,
             id_content : req.body.id_content,
             id_kegiatan : req.body.id_kegiatan,
             catatan : req.body.catatan,
@@ -184,4 +185,31 @@ function updateKKP(req,res){
          
     })
 }
-export { getAllDatas, postData, getKegiatan, getAllKegiatan, postKegiatan, homePage, getDatas, postKKP, getKKP, getKKPContents, postKKPContents, deleteKKPContents, updateKKP }
+function loginKKP(req,res){
+    connectDBKKP(config.users[0].user,config.users[0].pass,async (db)=>{
+	try{
+        let datas = await db.collection(config.collection.accounts).findOne({username:req.body.username,password:req.body.password})
+        if(datas !== null){
+        res.send({
+            success : true,
+            message : "Login Berhasil",
+            loginInfo : {
+                datas : datas,
+                token : "ABCADAberapa"
+            }
+        })}else{
+        res.send({
+            success : false,
+            message : "Login Gagal",
+        })    
+        }
+    
+    } catch(err){
+		res.send({
+			"message" : "Anda gagal membuat kegiatan baru",
+			"err_message":err.message
+		})
+	}
+    })
+}
+export { getAllDatas, postData, getKegiatan, getAllKegiatan, postKegiatan, homePage, getDatas, postKKP, getKKP, getKKPContents, postKKPContents, deleteKKPContents, updateKKP, loginKKP }

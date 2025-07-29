@@ -9,7 +9,8 @@ export default
         "presensi":"presensi",
         "acara" : "acara",
         "contents" : "contents",
-        "upts" : "upts"
+        "upts" : "upts",
+        "accounts" : "accounts"
     },
     "port" : 7000
 }
