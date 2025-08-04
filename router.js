@@ -80,6 +80,7 @@ function homePage(req,res){
 function postKKP(req,res){
     connectDBKKP(config.users[0].user,config.users[0].pass,async (db)=>{
         let obj={
+            key : req.body.key,
             id_kegiatan : req.body.id_kegiatan,
             nama_upt : req.body.nama_upt,
             tanggala : req.body.tanggala,
@@ -91,6 +92,7 @@ function postKKP(req,res){
             linksurat : req.body.linksurat,
             linkblangko : req.body.linkblangko,
         }
+        console.log(obj)
 	try{
         await db.collection(config.collection.upts).insertOne(obj)
         res.send({
@@ -162,6 +164,7 @@ function updateKKP(req,res){
                 {
                     id_kegiatan:req.params['idKKP']
                 },{$set:{
+                    key : req.body.key,
                     id_kegiatan : req.body.id_kegiatan,
                     nama_upt : req.body.nama_upt,
                     tanggala : req.body.tanggala,
