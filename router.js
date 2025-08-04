@@ -188,24 +188,40 @@ function updateKKP(req,res){
 function updateContent(req,res){
     connectDBKKP(config.users[0].user, config.users[0].pass, async (db)=>{
         try{
+            const updateFields = {};
+            const fields = [
+            "link_tj", "keterangan_tj", "user", "id_content", "id_kegiatan",
+            "catatan", "bidang", "noberkas", "bulan", "saran", "keterangan","approved"
+            ];
+
+            fields.forEach(field => {
+            if (req.body[field] !== undefined && req.body[field] !== null) {
+                updateFields[field] = req.body[field];
+            }
+            });
+
+            await db.collection(config.collection.contents).updateOne(
+            {
+                id_kegiatan: req.body.id_kegiatan,
+                id_content: req.body.id_content
+            },
+            {
+                $set: updateFields
+            }
+            );
             let datas = await db.collection(config.collection.contents).updateOne(
                 {
-                    id_kegiatan:req.body.id_kegiatan, id_content:req.body.id_content
-                },{$set:{
-                    user : req.body.user,
-                    id_content : req.body.id_content,
-                    id_kegiatan : req.body.id_kegiatan,
-                    catatan : req.body.catatan,
-                    bidang : req.body.bidang,
-                    noberkas : req.body.noberkas,
-                    bulan : req.body.bulan,
-                    saran : req.body.saran,
-                    keterangan : req.body.keterangan
-                }})
+                    id_kegiatan: req.body.id_kegiatan,
+                    id_content: req.body.id_content
+                },
+                {
+                    $set: updateFields
+                }
+            );
             res.send({
                 message : "Berhasil Update Data"
             })
-        }catch(err){
+             }catch(err){
             res.send({
                 message : "Gagal Update Data",
                 err : err.message
