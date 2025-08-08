@@ -1,5 +1,6 @@
 import express from 'express'
 import bodyParser from 'body-parser'
+import {DasarHukumRoutes} from './routers/DasarHukum.js'
 import { 
   getAllDatas, 
   postData, 
@@ -39,6 +40,8 @@ app.post('/api/pengendalian/kkp/uploadKKP/:idKKP',postKKPContents)
 app.put('/api/pengendalian/kkp/updateContent',updateContent)
 app.delete('/api/pengendalian/kkp/deleteKKP/:idContent',deleteKKPContents)
 app.post('/api/pengendalian/login',loginKKP)
+app.post('/api/dasarhukum/upload',DasarHukumRoutes.postDocuments)
+app.get('/api/dasarhukum/get/all',DasarHukumRoutes.getDocuments)
 
 
 

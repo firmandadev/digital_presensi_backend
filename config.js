@@ -10,7 +10,8 @@ export default
         "acara" : "acara",
         "contents" : "contents",
         "upts" : "upts",
-        "accounts" : "accounts"
+        "accounts" : "accounts",
+        "legal" : "legal"
     },
     "port" : 7000
 }
