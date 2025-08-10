@@ -238,6 +238,7 @@ function loginKKP(req,res){
 	try{
         let datas = await db.collection(config.collection.accounts).findOne({username:req.body.username,password:req.body.password})
         if(datas !== null){
+          console.log(datas)
         res.send({
             success : true,
             message : "Login Berhasil",

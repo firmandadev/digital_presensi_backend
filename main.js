@@ -42,7 +42,7 @@ app.delete('/api/pengendalian/kkp/deleteKKP/:idContent',deleteKKPContents)
 app.post('/api/pengendalian/login',loginKKP)
 app.post('/api/dasarhukum/upload',DasarHukumRoutes.postDocuments)
 app.get('/api/dasarhukum/get/all',DasarHukumRoutes.getDocuments)
-
+app.put('/api/dasarhukum/update/:doc_id',DasarHukumRoutes.updateDocuments)
 
 
 app.listen(process.env.PORT || 7000,()=>{
