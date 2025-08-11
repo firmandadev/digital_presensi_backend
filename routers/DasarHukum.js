@@ -9,8 +9,10 @@ export class DasarHukumRoutes{
   }
   static postDocuments(req,res){
     connectDBKKP(config.users[0].user,config.users[0].pass,async (db)=>{
+      let body = req.body
+      if( body.doc_date ){ body.doc_date = new Date(body.doc_date) }
       let datas = 
-      await db.collection(config.collection.legal).insertOne(req.body)
+      await db.collection(config.collection.legal).insertOne(body)
       DasarHukumRoutes.sentObject.message = "Berhasil Upload Dokumen"
       DasarHukumRoutes.sentObject.response_code = 200
       DasarHukumRoutes.sentObject.datas = datas
@@ -19,7 +21,7 @@ export class DasarHukumRoutes{
     }
   static getDocuments(req,res){
     connectDBKKP(config.users[0].user, config.users[0].pass, async (db)=>{
-      let datas = await db.collection(config.collection.legal).find().toArray()
+      let datas = await db.collection(config.collection.legal).find({}).sort({doc_date:-1}).toArray()
       DasarHukumRoutes.sentObject.message = "Berhasil Mengambil Dokumen"
       DasarHukumRoutes.sentObject.response_code = 200
       DasarHukumRoutes.sentObject.datas = datas
@@ -28,7 +30,9 @@ export class DasarHukumRoutes{
     }
   static updateDocuments(req,res){
     connectDBKKP(config.users[0].user, config.users[0].pass, async (db)=>{
-      let datas = await db.collection(config.collection.legal).updateOne({doc_id:req.params['doc_id']},{$set:req.body})
+      let body = req.body
+      if( body.doc_date ){ body.doc_date = new Date(body.doc_date) }
+      let datas = await db.collection(config.collection.legal).updateOne({doc_id:req.params['doc_id']},{$set:body})
       DasarHukumRoutes.sentObject.message = "Berhasil Update Data"
       DasarHukumRoutes.sentObject.response_code = 200
       DasarHukumRoutes.sentObject.datas = datas
